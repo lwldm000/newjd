@@ -146,9 +146,9 @@ function checkMoney(roundNum) {
           if (safeGet(data)) {
             console.log(`领红包结果${data}`);
             data = JSON.parse(data);
-            if (data['data']['bizCode'] === 0) {
-              console.log(`获得 ${data.data.result.currentTimeCash} 元，共计 ${data.data.result.totalCash} 元`)
-            }
+            //if (data['data']['bizCode'] === 0) {
+              console.log(`共计 ${data.data.result.totalCash} 元`)
+            //}
           }
         }
       } catch (e) {
