@@ -45,7 +45,7 @@ let inviteCodes = [""];
   await requireConfig();
   if (exchangeFlag) {
     console.log(`脚本自动抽奖`)
-    message += `脚本已经开启自动抽奖\n`
+    message += `脚本已经开启自 动抽奖\n`
   } else {
     console.log(`脚本不会自动抽奖，建议活动快结束开启，默认关闭(在6.2日自动开启抽奖),如需自动抽奖请设置环境变量  JD_CITY_EXCHANGE 为true`);
     message += `脚本还没有开启自动抽奖，\n建议活动快结束开启，\n默认关闭(在6.2日自动开启抽奖),如需自动抽奖请设置环境变量\n`
