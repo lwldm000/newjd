@@ -78,7 +78,7 @@ let inviteCodes = [""];
           if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
             console.log(`助力次数已耗尽，跳出`)
             message += `助力次数已耗尽，无法助力\n`;
-            await checkMoney(10);
+            await checkMoney();
             break
           }
           if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0]) {
@@ -134,7 +134,7 @@ async function showMsg() {
   })
 }
 
-function checkMoney(roundNum) {
+function checkMoney() {
   let body = {"lbsCity":"19","realLbsCity":"1601","inviteId":inviteId,"headImg":"","userName":""}
   return new Promise((resolve) => {
     $.post(taskPostUrl("city_getHomeData",body), async (err, resp, data) => {
