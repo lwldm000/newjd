@@ -78,31 +78,7 @@ let inviteCodes = [""];
           if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
             console.log(`助力次数已耗尽，跳出`)
             message += `助力次数已耗尽，无法助力\n`;
-        
-            return new Promise((resolve) => {
-              $.post(taskPostUrl("city_receiveCash",{}), async (err, resp, data) => {
-                try {
-                  if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                  } else {
-                    if (safeGet(data)) {
-                      console.log(`领红包结果${data}`);
-                      data = JSON.parse(data);
-                      //if (data['data']['bizCode'] === 0) {
-                        //console.log(`获得 ${data.data.result.currentTimeCash} 元，共计 ${data.data.result.totalCash} 元`)
-                        console.log(`当前账号共计 ${data.data.result.totalCash} 元`)
-                      
-                      //}
-                    }
-                  }
-                } catch (e) {
-                  $.logErr(e, resp)
-                } finally {
-                  resolve(data);
-                }
-              })
-            })
+            await checkMoney(10);
             break
           }
           if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0]) {
@@ -155,6 +131,32 @@ async function showMsg() {
     if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     allMessage += `${message}\n`;
     resolve()
+  })
+}
+
+function checkMoney(roundNum) {
+  let body = {"cashType":1,"roundNum":roundNum}
+  return new Promise((resolve) => {
+    $.post(taskPostUrl("city_receiveCash",body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            console.log(`领红包结果${data}`);
+            data = JSON.parse(data);
+            if (data['data']['bizCode'] === 0) {
+              console.log(`获得 ${data.data.result.currentTimeCash} 元，共计 ${data.data.result.totalCash} 元`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
   })
 }
 
