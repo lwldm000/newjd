@@ -135,9 +135,9 @@ async function showMsg() {
 }
 
 function checkMoney(roundNum) {
-  let body = {"cashType":1,"roundNum":roundNum}
+  let body = {"lbsCity":"19","realLbsCity":"1601","inviteId":inviteId,"headImg":"","userName":""}
   return new Promise((resolve) => {
-    $.post(taskPostUrl("city_receiveCash",body), async (err, resp, data) => {
+    $.post(taskPostUrl("city_getHomeData",body), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
